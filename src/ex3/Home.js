@@ -151,6 +151,7 @@ class Home extends Component {
   state = {
     selectedProduct: null,
     cart: [],
+    quantity:1
   };
 
 
@@ -179,9 +180,9 @@ class Home extends Component {
     );
   };
 
-  // 1. hiện giỏ hàng ra
-  // 2. xoá sp
+ 
   deleteCartItem = (id) => {
+
     const cloneCart = [...this.state.cart];
     const index = cloneCart.findIndex((cartItem) => {
       return cartItem.product.id === id;
@@ -195,13 +196,23 @@ class Home extends Component {
   };
   // 3. tăng giảm số lượng
   increaseQuantity = (item) => {
-
+    let newQuantity = item.quantity++
+    this.setState({
+      quantity: newQuantity
+    })
   };
-  decreaseQuantity = (id) => {};
+  decreaseQuantity = (item) => {
+    if(item.quantity > 1){
+      let newQuantity = item.quantity--
+      this.setState({
+        quantity: newQuantity
+      })
+    }else return
+ 
+  };
+  
 
 
-  // 5.Thanh toán
-  checkout = () => {};
 
   setSelectedProduct = (val) => {
     this.setState({
@@ -229,7 +240,9 @@ class Home extends Component {
           <ProductDetail selectedProduct={this.state.selectedProduct} />
         )}
         <Cart cart={this.state.cart}
-         />
+         increaseQuantity ={this.increaseQuantity}
+         decreaseQuantity={this.decreaseQuantity}
+         deleteCartItem={this.deleteCartItem}/>
       </div>
     );
   }

@@ -12,11 +12,11 @@ class Cart extends Component {
 
   renderCart = () => {
     return this.props.cart.map((item, index) => {
-      const { image, name, price } = item.product;
+      const { image, name, price,id } = item.product;
       const { quantity } = item;
       return (
-        <tr>
-          <td>{index}</td>
+        <tr key = {index}>
+          <td>{index + 1 }</td>
           <td>
             <img
               style={{
@@ -28,14 +28,14 @@ class Cart extends Component {
           </td>
           <td>{name}</td>
           <td>
-            <button className="btn btn-info">-</button>
+            <button className="btn btn-info" onClick={() => {this.props.decreaseQuantity(this.props.cart[index])}}>-</button>
             <span>{quantity}</span>
-            <button className="btn btn-info">+</button>
+            <button className="btn btn-info" onClick={() => {this.props.increaseQuantity(this.props.cart[index])}}>+</button>
           </td>
           <td>{price}$</td>
           <td>{price * quantity}$</td>
           <td>
-            <button className="btn btn-danger">Xoá</button>
+            <button className="btn btn-danger" onClick={() => {this.props.deleteCartItem(id)}}>Xoá</button>
           </td>
         </tr>
       );
